@@ -4,7 +4,7 @@
 
 
 
-## 测试环境
+## Test environment
 
 ubuntu 20.04
 
@@ -12,7 +12,7 @@ ros noetic
 
 gazebo version 11
 
-## 编译
+## Compile the package
 
 ``` bash
 mkdir aloha_sim_ws
@@ -24,7 +24,7 @@ cd ..
 catkin_make
 ```
 
-## 文件目录
+## File Directory
 
 ```
 ├── aloha_description
@@ -54,11 +54,11 @@ catkin_make
 └── doc
 ```
 
-其中，aloha_mujoco是mujoco仿真下的实现，具体请参考aloha_mujoco文件夹中的[README](./aloha_mujoco/README.MD)
+Where aloha_mujoco is the implementation under the mujoco emulation, please refer to the [README](. /aloha_mujoco/README.MD).
 
-## 启动仿真
+## Start the emulation
 
-### gazebo仿真
+### gazebo emulation
 
 ``` bash
 roslaunch arx5_moveit_config demo_gazebo.launch
@@ -72,50 +72,49 @@ roslaunch arx5_moveit_config demo_gazebo.launch
 
 
 
-启动gazebo仿真后有两个窗口，一个是gazebo物理仿真窗口，一个是rviz窗口，在rviz窗口中可以调用moveit组件规划机械臂
+After starting the gazebo simulation there are two windows, one for the gazebo physics simulation and one for rviz, in the rviz window you can call the moveit component to plan the robot arm.
 
-在gazebo仿真窗口中，右侧画面显示的是实时的物理仿真环境，机械臂的位置信息以及运动学模拟信息都在这里显示，gazebo也将反馈仿真的机械臂状态，执行规划器发送的控制角度
+In the gazebo simulation window, the right side of the screen shows the real-time physical simulation environment, the position information of the arm and the kinematics simulation information are displayed here, gazebo will also feedback the state of the simulated arm and execute the control angle sent by the planner.
 
-在rviz仿真窗口中，左下侧显示的是moveit组件的ui界面，这里可以选择不同的规划组(Planning Group)来控制不同的机械臂和夹爪。右侧窗口显示的是实时的机械臂位置，这个是由gazebo仿真提供的
+In the rviz simulation window, the lower left side shows the ui interface of the moveit component, where different planning groups can be selected to control different robotic arms and grippers. The right window shows the real time position of the arm, which is provided by gazebo simulation.
 
-#### 移动底盘
+#### Mobile Chassis
 
 ``` bash
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 
-打开键盘控制节点，可以下发速度控制底盘移动
+Open the keyboard control node to send speed control to move the chassis.
 
-#### 移动机械臂
+#### Moving the arm
 
-在rviz界面中拖动示教球，按如图所示操作，机械臂将根据目标末端夹爪位置，计算出关节角度和机械臂轨迹
+Drag the teach ball in the rviz interface and operate as shown, the robot arm will calculate the joint angle and robot arm trajectory according to the position of the target end gripper jaws
 
 ![aloha_move](./doc/aloha_moveit_1.png)
 
-需要注意的是，当点击Plan开始规划后，系统需要时间计算，待Execute按键由灰转变为黑色，点击即可执行刚才计划的轨迹。
+Note that after clicking Plan to start planning, the system needs time to calculate, wait for the Execute button to change from grey to black, click to execute the trajectory just planned.
 
-### rviz仿真
+### rviz simulation
 
-rviz仿真和gazebo仿真的唯一区别就是不启动物理仿真引擎gazebo，而是只启动数据可视化平台rviz
+The only difference between rviz simulation and gazebo simulation is that instead of launching the physical simulation engine gazebo, only the data visualisation platform rviz is launched.
 
 ``` bash
 roslaunch arx5_moveit_config demo.launch
 ```
 
-启动后和gazebo仿真里的rviz界面一样，按照上文操作即可。
+The interface of rviz is the same as that of gazebo simulation, just follow the above steps.
 
 
+## isaac sim simulation
 
-## isaac sim仿真
+### isaac sim download
 
-### isaac sim 下载
+Download isaac sim from https://developer.nvidia.com/isaac-sim, then search for isaac sim in ‘exchanges/exchange’ in omniverse_launcher and download it. isaac sim
 
-https://developer.nvidia.com/isaac-sim  点击下载omniverse，然后在omniverse_launcher的“交易所/exchange”中搜索isaac sim，下载isaac sim
+This repository provides a urdf for isaac sim import: aloha_isaac_sim/urdf/arx5_description_isaac.urdf
 
-本仓库提供了用于isaac sim仿真导入的urdf : aloha_isaac_sim/urdf/arx5_description_isaac.urdf
+Start isaac sim in omniverse_launcher, and then on the upper toolbar isaac utils->workflows->URDF Importer->In the pop-up window, find Import->Input File and select urdf path->click Import.
 
-在omniverse_launcher中启动isaac sim，然后上方工具栏isaac utils->workflows->URDF Importer->在弹出的窗口中找到下方的Import->Input File选择urdf路径->点击Import
-
-导入isaac sim后效果如下：
+The effect after importing isaac sim is as follows:
 
 ![issac_sim](./doc/aloha_isaac.png)
